@@ -40,12 +40,8 @@ def wslocal():
         websocket = yield from asyncws.connect(wslocalAdd)
         authPass = False;
         while True:
-            print ('准备接收数据')
             message = yield from websocket.recv()
-            print ('Rev Message:')
-            print (message)
             if message == '' or message is None:
-                print('消息内容为空')
                 continue
             messageObj = json.loads(message)
             if messageObj['type'] == 'auth_ok':
@@ -87,12 +83,8 @@ def wsServer():
         print (wsServerAdd)
         websocketFromServer = yield from asyncws.connect(wsServerAdd)
         while True:
-            print ('准备接收指令')
             messageFromServer = yield from websocketFromServer.recv()
-            print('Rev Order:')
-            print (messageFromServer)
             if messageFromServer == '' or messageFromServer is None:
-                print('指令内容为空')
                 continue
             messageFromServerObj = json.loads(messageFromServer)
 
