@@ -65,7 +65,7 @@ def wslocal():
 
             if message is not None:
                 if websocketFromServer is not None:
-                    messageObj['token'] = config_token
+                    messageObj['token'] = os.environ.get('TOKEN')
                     yield from websocketFromServer.send(json.dumps(messageObj))
             else:
                 continue
