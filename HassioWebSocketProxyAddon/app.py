@@ -33,11 +33,14 @@ def wslocal():
     global websocket
     global wslocalAdd
     global password
+    global msgId
     try:
+        print ('连接add-on内部代理')
+        print (wslocalAdd)
         websocket = yield from asyncws.connect(wslocalAdd)
         authPass = False;
-        global msgId
         while True:
+            print ('准备接收数据')
             message = yield from websocket.recv()
             print ('Rev Message:')
             print (message)
@@ -77,8 +80,11 @@ def wsServer():
     global websocket
     global wsServerAdd
     try:
+        print ('连接转发服务器')
+        print (wsServerAdd)
         websocketFromServer = yield from asyncws.connect(wsServerAdd)
         while True:
+            print ('准备接收指令')
             messageFromServer = yield from websocketFromServer.recv()
             print('Rev Order:')
             print (messageFromServer)
