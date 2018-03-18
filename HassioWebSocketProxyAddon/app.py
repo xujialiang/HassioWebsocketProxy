@@ -10,7 +10,7 @@ wsServerAdd = 'ws://aligenie.xujialiang.net/socket.io'
 
 # 调试配置
 # wslocalAdd = 'ws://192.168.2.120:8123/api/websocket'
-# wsServerAdd = 'ws://192.168.2.115:9001/socket.io'
+# wsServerAdd = 'ws://aligenie.xujialiang.net/socket.io'
 # password = 'xjlabcd1234'
 
 
@@ -44,6 +44,9 @@ def wslocal():
             message = yield from websocket.recv()
             print ('Rev Message:')
             print (message)
+            if message == '' or message is None:
+                print('消息内容为空')
+                continue
             messageObj = json.loads(message)
             if messageObj['type'] == 'auth_ok':
                 print ('websocket api 认证成功')
@@ -88,6 +91,9 @@ def wsServer():
             messageFromServer = yield from websocketFromServer.recv()
             print('Rev Order:')
             print (messageFromServer)
+            if messageFromServer == '' or messageFromServer is None:
+                print('指令内容为空')
+                continue
             messageFromServerObj = json.loads(messageFromServer)
 
             if messageFromServerObj is not None and messageFromServerObj['code'] == 0:
