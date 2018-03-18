@@ -1,13 +1,13 @@
 {
   "name": "HassioWebsocketProxy",
-  "version": "38",
+  "version": "40",
   "slug": "websocketproxy_slug",
   "description": "HassioWebsocketProxy add-on!",
   "startup": "before",
   "boot": "auto",
   "options": {
     "socket_server":"aligenie.xujialiang.net",
-    "token":"replace the token with yours"
+    "token":"abcd12344545qafd"
   },
   "schema": {
     "socket_server": "str",

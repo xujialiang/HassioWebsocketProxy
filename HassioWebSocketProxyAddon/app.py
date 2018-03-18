@@ -28,13 +28,12 @@ print (config_token)
 
 
 @asyncio.coroutine
-def wslocal():
+def wslocal(config_token):
     global websocketFromServer
     global websocket
     global wslocalAdd
     global password
     global msgId
-    global config_token
     try:
         print ('连接add-on内部代理')
         print (wslocalAdd)
@@ -65,7 +64,7 @@ def wslocal():
 
             if message is not None:
                 if websocketFromServer is not None:
-                    messageObj['token'] = os.environ.get('TOKEN')
+                    messageObj['token'] = config_token
                     yield from websocketFromServer.send(json.dumps(messageObj))
             else:
                 continue
@@ -96,6 +95,6 @@ def wsServer():
     except Exception as inst:
         print (inst)
 
-tasks = [asyncio.Task(wslocal()), asyncio.Task(wsServer())]
+tasks = [asyncio.Task(wslocal(config_token)), asyncio.Task(wsServer())]
 asyncio.get_event_loop().run_until_complete(asyncio.gather(*tasks))
 asyncio.get_event_loop().close() 
