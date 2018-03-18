@@ -4,14 +4,14 @@ import json
 import os
 
 # 树莓派上配置
-# wslocalAdd = 'ws://hassio/homeassistant/websocket'
-# password = os.environ.get('HASSIO_TOKEN')
-# wsServerAdd = 'ws://aligenie.xujialiang.net/socket.io'
+wslocalAdd = 'ws://hassio/homeassistant/websocket'
+password = os.environ.get('HASSIO_TOKEN')
+wsServerAdd = 'ws://aligenie.xujialiang.net/socket.io'
 
 # 调试配置
-wslocalAdd = 'ws://192.168.2.120:8123/api/websocket'
-wsServerAdd = 'ws://192.168.2.115:9001/socket.io'
-password = 'xjlabcd1234'
+# wslocalAdd = 'ws://192.168.2.120:8123/api/websocket'
+# wsServerAdd = 'ws://192.168.2.115:9001/socket.io'
+# password = 'xjlabcd1234'
 
 
 msgId = 1
