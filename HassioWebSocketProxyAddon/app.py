@@ -34,6 +34,7 @@ def wslocal():
     global wslocalAdd
     global password
     global msgId
+    global config_token
     try:
         print ('连接add-on内部代理')
         print (wslocalAdd)
