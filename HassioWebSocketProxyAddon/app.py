@@ -3,12 +3,16 @@ import asyncws
 import json
 import os
 
-# wslocalAdd = 'ws://192.168.2.120:8123/api/websocket'
-wsServerAdd = 'ws://192.168.2.115:9001/socket.io'
-password = os.environ.get('HASSIO_TOKEN')
-# password = 'xjlabcd1234'
-wslocalAdd = 'ws://hassio/homeassistant/websocket'
+# 树莓派上配置
+# wslocalAdd = 'ws://hassio/homeassistant/websocket'
+# password = os.environ.get('HASSIO_TOKEN')
 # wsServerAdd = 'ws://aligenie.xujialiang.net/socket.io'
+
+# 调试配置
+wslocalAdd = 'ws://192.168.2.120:8123/api/websocket'
+wsServerAdd = 'ws://192.168.2.115:9001/socket.io'
+password = 'xjlabcd1234'
+
 
 msgId = 1
 websocketFromServer = None;
@@ -35,6 +39,8 @@ def wslocal():
         global msgId
         while True:
             message = yield from websocket.recv()
+            print ('Rev Message:')
+            print (message)
             messageObj = json.loads(message)
             if messageObj['type'] == 'auth_ok':
                 print ('websocket api 认证成功')
@@ -61,7 +67,6 @@ def wslocal():
             else:
                 continue
 
-            print (message)
     except Exception as inst:
         print (inst)
 
@@ -75,6 +80,8 @@ def wsServer():
         websocketFromServer = yield from asyncws.connect(wsServerAdd)
         while True:
             messageFromServer = yield from websocketFromServer.recv()
+            print('Rev Order:')
+            print (messageFromServer)
             messageFromServerObj = json.loads(messageFromServer)
 
             if messageFromServerObj is not None and messageFromServerObj['code'] == 0:
