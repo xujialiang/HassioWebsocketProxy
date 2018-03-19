@@ -66,6 +66,7 @@ def wslocal():
             if message is not None:
                 if websocketFromServer is not None:
                     messageObj['auth_token'] = auth_token
+                    messageObj['auth_token_test'] = 'auth_token123'
                     yield from websocketFromServer.send(json.dumps(messageObj))
             else:
                 continue

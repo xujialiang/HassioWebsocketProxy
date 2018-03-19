@@ -1,6 +1,6 @@
 {
   "name": "HassioWebsocketProxy",
-  "version": "51",
+  "version": "52",
   "slug": "websocketproxy_slug",
   "description": "HassioWebsocketProxy add-on!",
   "startup": "before",
