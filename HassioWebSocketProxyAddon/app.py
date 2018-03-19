@@ -19,8 +19,8 @@ msgId = 1
 websocketFromServer = None;
 websocket = None;
 
-config_serverAdd = os.environ.get('SOCKET_SERVER');
-auth_token = os.environ.get('AUTH_TOKEN');
+config_serverAdd = sys.argv[1];
+auth_token = sys.argv[2];
 
 if config_serverAdd is not None:
     wsServerAdd = 'ws://' + config_serverAdd + '/socket.io'
