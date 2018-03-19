@@ -3,10 +3,10 @@ echo Hello world!
 CONFIG_PATH=/data/options.json
 
 SOCKET_SERVER="$(jq --raw-output '.socket_server' $CONFIG_PATH)"
-TOKEN="$(jq --raw-output '.token' $CONFIG_PATH)"
+AUTH_TOKEN="$(jq --raw-output '.auth_token' $CONFIG_PATH)"
 
 echo READ CONFIG!
-echo $TOKEN
+echo $AUTH_TOKEN
 echo $SOCKET_SERVER
 
 echo READ CONFIG END!

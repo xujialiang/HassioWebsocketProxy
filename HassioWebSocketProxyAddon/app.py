@@ -34,6 +34,7 @@ def wslocal():
     global wslocalAdd
     global password
     global msgId
+    global auth_token
     try:
         print ('连接add-on内部代理')
         print (wslocalAdd)
@@ -64,7 +65,6 @@ def wslocal():
 
             if message is not None:
                 if websocketFromServer is not None:
-                    messageObj['token'] = auth_token
                     messageObj['auth_token'] = auth_token
                     yield from websocketFromServer.send(json.dumps(messageObj))
             else:
