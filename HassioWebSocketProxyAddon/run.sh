@@ -11,5 +11,5 @@ echo $SOCKET_SERVER
 
 echo READ CONFIG END!
 
-python3 app.py $SOCKET_SERVER $AUTH_TOKEN
+python3 app.py "$SOCKET_SERVER" "$AUTH_TOKEN"
 python3 -m http.server

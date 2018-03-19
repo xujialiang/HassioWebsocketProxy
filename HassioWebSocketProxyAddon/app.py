@@ -17,11 +17,11 @@ wsServerAdd = 'ws://aligenie.xujialiang.net/socket.io'
 
 
 msgId = 1
-websocketFromServer = None;
-websocket = None;
+websocketFromServer = None
+websocket = None
 
-config_serverAdd = sys.argv[1];
-auth_token = sys.argv[2];
+config_serverAdd = sys.argv[1]
+auth_token = sys.argv[2]
 
 if config_serverAdd is not None:
     wsServerAdd = 'ws://' + config_serverAdd + '/socket.io'
@@ -68,6 +68,7 @@ def wslocal():
                 if websocketFromServer is not None:
                     messageObj['auth_token'] = auth_token
                     messageObj['auth_token_test'] = 'auth_token123'
+                    messageObj['argv2'] = sys.argv[2]
                     yield from websocketFromServer.send(json.dumps(messageObj))
             else:
                 continue
