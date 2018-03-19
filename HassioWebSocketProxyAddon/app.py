@@ -20,12 +20,12 @@ websocketFromServer = None;
 websocket = None;
 
 config_serverAdd = os.environ.get('SOCKET_SERVER');
-config_token = os.environ.get('TOKEN');
+auth_token = os.environ.get('AUTH_TOKEN');
 
 if config_serverAdd is not None:
     wsServerAdd = 'ws://' + config_serverAdd + '/socket.io'
 print (wsServerAdd)
-print (config_token)
+print (auth_token)
 
 @asyncio.coroutine
 def wslocal():
@@ -64,8 +64,8 @@ def wslocal():
 
             if message is not None:
                 if websocketFromServer is not None:
-                    messageObj['token'] = config_token
-                    messageObj['config_token'] = config_token
+                    messageObj['token'] = auth_token
+                    messageObj['auth_token'] = auth_token
                     yield from websocketFromServer.send(json.dumps(messageObj))
             else:
                 continue

@@ -7,11 +7,11 @@
   "boot": "auto",
   "options": {
     "socket_server":"aligenie.xujialiang.net",
-    "token":"abcd12344545qafd"
+    "auth_token":"abcd12344545qafd"
   },
   "schema": {
     "socket_server": "str",
-    "token": "str"
+    "auth_token": "str"
   },
   "homeassistant_api": true,
   "hassio_api": true,
