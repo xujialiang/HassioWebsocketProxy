@@ -2,6 +2,7 @@ import asyncio
 import asyncws
 import json
 import os
+from time import sleep
 
 # 树莓派上配置
 wslocalAdd = 'ws://hassio/homeassistant/websocket'
@@ -26,9 +27,8 @@ if config_serverAdd is not None:
 print (wsServerAdd)
 print (config_token)
 
-
 @asyncio.coroutine
-def wslocal(config_token):
+def wslocal():
     global websocketFromServer
     global websocket
     global wslocalAdd
@@ -71,13 +71,14 @@ def wslocal(config_token):
 
     except Exception as inst:
         print (inst)
-
+        raise Exception
 
 @asyncio.coroutine
 def wsServer():
     global websocketFromServer
     global websocket
     global wsServerAdd
+    global loop
     try:
         print ('连接转发服务器')
         print (wsServerAdd)
@@ -90,11 +91,19 @@ def wsServer():
 
             if messageFromServerObj is not None and messageFromServerObj['code'] == 0:
                 if websocket is not None:
-                    print ("Rev Command:"+messageFromServer)
+                    print("Rev Command:" + messageFromServer)
                     yield from websocket.send(json.dumps(messageFromServerObj['command']))
-    except Exception as inst:
-        print (inst)
 
-tasks = [asyncio.Task(wslocal(config_token)), asyncio.Task(wsServer())]
-asyncio.get_event_loop().run_until_complete(asyncio.gather(*tasks))
-asyncio.get_event_loop().close() 
+    except Exception as inst:
+        print(inst)
+        raise Exception
+
+
+while True:
+    try:
+        tasks = [asyncio.Task(wslocal()), asyncio.Task(wsServer())]
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(asyncio.gather(*tasks))
+    except Exception as inst:
+        print('开始重连')
+        sleep(5)
