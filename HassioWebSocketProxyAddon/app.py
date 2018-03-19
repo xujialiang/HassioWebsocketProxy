@@ -3,6 +3,7 @@ import asyncws
 import json
 import os
 from time import sleep
+import sys
 
 # 树莓派上配置
 wslocalAdd = 'ws://hassio/homeassistant/websocket'
