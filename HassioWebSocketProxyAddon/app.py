@@ -17,8 +17,6 @@ wsServerAdd = 'ws://aligenie.xujialiang.net/socket.io'
 
 
 msgId = 1
-websocketFromServer = None
-websocket = None
 
 config_serverAdd = sys.argv[1]
 auth_token = sys.argv[2]
@@ -29,21 +27,18 @@ print (wsServerAdd)
 print (auth_token)
 
 @asyncio.coroutine
-def wslocal():
-    global websocketFromServer
-    global websocket
-    global wslocalAdd
+def wslocal(websocket,websocketFromServer):
     global password
     global msgId
     global auth_token
     try:
         print ('连接add-on内部代理')
-        print (wslocalAdd)
-        websocket = yield from asyncws.connect(wslocalAdd)
         authPass = False;
         while True:
             message = yield from websocket.recv()
-            if message == '' or message is None:
+            if message is None:
+                raise Exception
+            if message == '':
                 continue
             messageObj = json.loads(message)
             if messageObj['type'] == 'auth_ok':
@@ -76,18 +71,14 @@ def wslocal():
         raise Exception
 
 @asyncio.coroutine
-def wsServer():
-    global websocketFromServer
-    global websocket
-    global wsServerAdd
-    global loop
+def wsServer(websocket,websocketFromServer):
     try:
         print ('连接转发服务器')
-        print (wsServerAdd)
-        websocketFromServer = yield from asyncws.connect(wsServerAdd)
         while True:
             messageFromServer = yield from websocketFromServer.recv()
-            if messageFromServer == '' or messageFromServer is None:
+            if messageFromServer is None:
+                raise Exception;
+            if messageFromServer == '':
                 continue
             messageFromServerObj = json.loads(messageFromServer)
 
@@ -103,8 +94,10 @@ def wsServer():
 
 while True:
     try:
-        tasks = [asyncio.Task(wslocal()), asyncio.Task(wsServer())]
         loop = asyncio.get_event_loop()
+        websocket = loop.run_until_complete(asyncws.connect(wslocalAdd))
+        websocketFromServer = loop.run_until_complete(asyncws.connect(wsServerAdd))
+        tasks = [asyncio.Task(wslocal(websocket,websocketFromServer)), asyncio.Task(wsServer(websocket,websocketFromServer))]
         loop.run_until_complete(asyncio.gather(*tasks))
     except Exception as inst:
         print('开始重连')
